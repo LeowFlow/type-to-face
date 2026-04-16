@@ -3,197 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Type to Face - Crisp Webcam Typography</title>
+    <title>Type-To-Face</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main class="app">
-      <header class="header">
-        <h1>Type to Face</h1>
-        <p class="sub">Webcam typography renderer with DPR-sharp output and configurable mapping</p>
-      </header>
-
-      <section class="toolbar">
-        <button id="start" class="primary">Start camera</button>
-        <button id="pause" disabled>Pause</button>
-        <button id="snapshot" disabled>Snapshot PNG</button>
-        <button id="reset">Reset to Defaults</button>
+      <section class="hero" aria-labelledby="heroTitle">
+        <canvas id="heroAscii" class="heroCanvas" aria-label="Animated ASCII wordmark reading Type-To-Face"></canvas>
+        <div class="heroContent">
+          <h1 id="heroTitle" class="srOnly">Type-To-Face</h1>
+          <p class="heroKicker">Webcam typography renderer</p>
+          <a class="heroLink" href="render.html">Open renderer</a>
+        </div>
       </section>
 
-      <section class="presets">
-        <span>Scale presets</span>
-        <button class="preset" data-preset="fine">Fine</button>
-        <button class="preset" data-preset="balanced">Balanced</button>
-        <button class="preset" data-preset="chunky">Chunky</button>
-      </section>
-
-      <section class="layout">
-        <aside class="controls">
-          <h2>RendererConfig</h2>
-
-          <label class="control">
-            <span>Render mode</span>
-            <select id="renderMode">
-              <option value="crisp">Crisp mode</option>
-              <option value="performance">Performance mode</option>
-            </select>
-          </label>
-
-          <label class="control">
-            <span>Cell size</span>
-            <input id="cellSize" type="range" min="6" max="24" step="1" />
-            <output id="cellSizeOut"></output>
-          </label>
-
-          <div class="control">
-            <span>Auto columns / rows</span>
-            <output id="gridOut">-</output>
-          </div>
-
-          <label class="control">
-            <span>Line height</span>
-            <input id="lineHeight" type="range" min="0.8" max="1.4" step="0.01" />
-            <output id="lineHeightOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Tracking</span>
-            <input id="tracking" type="range" min="-0.5" max="1" step="0.05" />
-            <output id="trackingOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Font family</span>
-            <input id="fontFamily" type="text" />
-          </label>
-
-          <label class="control">
-            <span>Font weight</span>
-            <input id="fontWeight" type="range" min="300" max="900" step="100" />
-            <output id="fontWeightOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Font size mode</span>
-            <select id="fontSizeMode">
-              <option value="auto">Auto</option>
-              <option value="manual">Manual</option>
-            </select>
-          </label>
-
-          <label class="control">
-            <span>Font size (manual)</span>
-            <input id="fontSize" type="range" min="6" max="32" step="1" />
-            <output id="fontSizeOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Glyph ramp preset</span>
-            <select id="glyphRampPreset"></select>
-          </label>
-
-          <label class="control">
-            <span>Custom ramp (dense to sparse)</span>
-            <input id="customRamp" type="text" placeholder="@%#*+=-:. " />
-          </label>
-
-          <label class="control inline">
-            <input id="invert" type="checkbox" />
-            <span>Invert density</span>
-          </label>
-
-          <label class="control">
-            <span>Brightness</span>
-            <input id="brightness" type="range" min="-100" max="100" step="1" />
-            <output id="brightnessOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Contrast</span>
-            <input id="contrast" type="range" min="50" max="200" step="1" />
-            <output id="contrastOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Gamma</span>
-            <input id="gamma" type="range" min="0.4" max="2.4" step="0.01" />
-            <output id="gammaOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Exposure</span>
-            <input id="exposure" type="range" min="-2" max="2" step="0.05" />
-            <output id="exposureOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Threshold (0 = off)</span>
-            <input id="threshold" type="range" min="0" max="255" step="1" />
-            <output id="thresholdOut"></output>
-          </label>
-
-          <label class="control inline">
-            <input id="smoothing" type="checkbox" />
-            <span>Sampling smoothing</span>
-          </label>
-
-          <label class="control">
-            <span>Detail boost</span>
-            <input id="detailBoost" type="range" min="0" max="100" step="1" />
-            <output id="detailBoostOut"></output>
-          </label>
-
-          <label class="control">
-            <span>Color mode</span>
-            <select id="colourMode">
-              <option value="average">Per-cell average</option>
-              <option value="off">Off</option>
-              <option value="palette">Palette quantized</option>
-            </select>
-          </label>
-
-          <label class="control">
-            <span>Palette preset</span>
-            <select id="palettePreset"></select>
-          </label>
-
-          <label class="control">
-            <span>Palette strength</span>
-            <input id="paletteStrength" type="range" min="0" max="100" step="1" />
-            <output id="paletteStrengthOut"></output>
-          </label>
-
-          <label class="control inline">
-            <input id="mirror" type="checkbox" />
-            <span>Mirror</span>
-          </label>
-
-          <label class="control">
-            <span>FPS cap</span>
-            <select id="fpsCap">
-              <option value="15">15</option>
-              <option value="30">30</option>
-              <option value="60">60</option>
-            </select>
-          </label>
-
-          <label class="control inline">
-            <input id="adaptiveResolution" type="checkbox" />
-            <span>Adaptive resolution</span>
-          </label>
-        </aside>
-
-        <section class="stage">
-          <div class="canvasWrap">
-            <canvas id="output" aria-label="ASCII camera output"></canvas>
-          </div>
-          <video id="video" autoplay playsinline muted></video>
-          <p id="status" class="status">Camera idle.</p>
-          <p id="stats" class="stats"></p>
-        </section>
+      <section class="homeIntro" aria-label="Type-To-Face intro">
+        <p>Black frame. White glyphs. Your face rebuilt one cell at a time.</p>
+        <a class="heroLink" href="render.html">Start camera</a>
       </section>
     </main>
 
-    <script type="module" src="src/main.js"></script>
+    <script type="module" src="src/home.js"></script>
   </body>
 </html>

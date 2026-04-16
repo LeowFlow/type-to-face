@@ -3,15 +3,16 @@
 Client-side webcam to typographic ASCII rendering with a modular pipeline and persisted `RendererConfig`.
 
 ## How to run
-1. Open `/Users/leohennessy/type-to-face/index.html` in a modern browser and click **Start camera**.
-2. If camera permissions are blocked on `file://`, serve locally:
+1. Open `/Users/leohennessy/type-to-face/index.html` in a modern browser for the homepage.
+2. Open `/Users/leohennessy/type-to-face/render.html` for the renderer and click **Start camera**.
+3. If camera permissions are blocked on `file://`, serve locally:
 
 ```bash
 cd /Users/leohennessy/type-to-face
 python3 -m http.server
 ```
 
-3. Open `http://localhost:8000`.
+4. Open `http://localhost:8000` for the homepage or `http://localhost:8000/render.html` for the renderer.
 
 ## Crisp rendering strategy
 1. Dedicated low-resolution sampling buffer (`src/sampling.js`) extracts one pixel per character cell.

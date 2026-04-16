@@ -32,7 +32,7 @@ const DEFAULT_CONFIG = {
   threshold: 0,
   smoothing: false,
   detailBoost: 12,
-  colourMode: "average",
+  colourMode: "off",
   palettePreset: "ansi16",
   paletteStrength: 100,
   mirror: true,

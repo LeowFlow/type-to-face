@@ -32,6 +32,7 @@ a {
 
 .app {
   min-height: 100vh;
+  min-height: 100svh;
   background: var(--bg);
 }
 
@@ -46,15 +47,74 @@ a {
   border: 0;
 }
 
+/* Homepage shell */
+.homePage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.siteHeader {
+  position: relative;
+  z-index: 3;
+  border-bottom: 1px solid var(--line);
+}
+
+.siteNav {
+  width: min(1280px, calc(100% - 32px));
+  min-height: 68px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.wordmark,
+.navLinks a {
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.wordmark {
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.navLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(14px, 2.2vw, 28px);
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.navLinks a {
+  color: inherit;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+
+.navLinks a:hover,
+.navLinks a[aria-current="page"] {
+  color: var(--text);
+}
+
+.homeMain {
+  min-height: 0;
+  display: grid;
+}
+
+/* The hero canvas remains full-bleed; only the call to action sits above it. */
 .hero {
   position: relative;
-  height: 76vh;
-  height: 76svh;
-  min-height: 460px;
-  max-height: 760px;
+  min-height: 480px;
   overflow: hidden;
   background: var(--bg);
-  border-bottom: 1px solid var(--line);
 }
 
 .heroCanvas {
@@ -68,44 +128,17 @@ a {
 
 .heroContent {
   position: absolute;
-  right: 24px;
-  bottom: 24px;
-  left: 24px;
+  inset: 0;
   z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: flex-end;
+  padding: clamp(40px, 8vh, 84px) 24px;
+  flex-direction: column;
   pointer-events: none;
 }
 
-.heroKicker {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-.homeIntro {
-  width: min(1280px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 28px 0 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  border-top: 1px solid var(--line);
-}
-
-.homeIntro p {
-  max-width: 620px;
-  margin: 0;
-  color: var(--text);
-  font-size: 1.125rem;
-  line-height: 1.5;
-}
-
-.heroLink,
+.heroCta,
 button {
   min-height: 40px;
   padding: 8px 12px;
@@ -119,8 +152,24 @@ button {
   cursor: pointer;
 }
 
-.heroLink {
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 13px 18px;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
   pointer-events: auto;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
 }
 
 button.primary {
@@ -130,10 +179,16 @@ button.primary {
   font-weight: 700;
 }
 
-.heroLink:hover,
+.heroCta:hover,
 button:hover:not(:disabled) {
   background: var(--text);
   color: var(--bg);
+}
+
+.heroCta:hover {
+  background: var(--bg);
+  color: var(--text);
+  transform: translateY(-1px);
 }
 
 button.primary:hover:not(:disabled) {
@@ -141,7 +196,10 @@ button.primary:hover:not(:disabled) {
   color: var(--text);
 }
 
-.heroLink:focus-visible,
+.wordmark:focus-visible,
+.navLinks a:focus-visible,
+.heroCta:focus-visible,
+.siteFooter a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
@@ -152,6 +210,40 @@ select:focus-visible {
 button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+/* Footer mirrors the navbar rhythm and keeps project context understated. */
+.siteFooter {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--line);
+}
+
+.footerInner {
+  width: min(1280px, calc(100% - 32px));
+  min-height: 76px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(140px, 0.8fr) minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.footerInner p {
+  margin: 0;
+}
+
+.footerTitle {
+  color: var(--text);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.footerMeta {
+  justify-self: end;
 }
 
 .studio {
@@ -334,8 +426,6 @@ button:disabled {
 
 @media (max-width: 980px) {
   .hero {
-    height: 72vh;
-    height: 72svh;
     min-height: 430px;
   }
 
@@ -350,18 +440,33 @@ button:disabled {
 }
 
 @media (max-width: 640px) {
+  .siteNav {
+    width: calc(100% - 24px);
+    min-height: auto;
+    padding: 14px 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .navLinks {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.72rem;
+  }
+
   .hero {
-    height: 68vh;
-    height: 68svh;
-    min-height: 360px;
+    min-height: 390px;
   }
 
   .heroContent {
-    right: 16px;
-    bottom: 16px;
-    left: 16px;
-    display: grid;
-    justify-items: start;
+    padding: 32px 12px 44px;
+  }
+
+  .heroCta {
+    min-height: 46px;
+    padding: 12px 16px;
   }
 
   .studio {
@@ -374,14 +479,20 @@ button:disabled {
     align-items: start;
   }
 
-  .homeIntro {
-    width: calc(100% - 24px);
-    display: grid;
-    justify-items: start;
-  }
-
   .pageNav {
     width: calc(100% - 24px);
+  }
+
+  .footerInner {
+    width: calc(100% - 24px);
+    min-height: auto;
+    padding: 16px 0;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .footerMeta {
+    justify-self: start;
   }
 
   .sectionHeader h1,

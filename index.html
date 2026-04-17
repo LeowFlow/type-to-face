@@ -7,21 +7,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="app">
-      <section class="hero" aria-labelledby="heroTitle">
-        <canvas id="heroAscii" class="heroCanvas" aria-label="Animated ASCII wordmark reading Face-To-Type"></canvas>
-        <div class="heroContent">
-          <h1 id="heroTitle" class="srOnly">Face-To-Type</h1>
-          <p class="heroKicker">Webcam typography renderer</p>
-          <a class="heroLink" href="render.html">Open renderer</a>
-        </div>
-      </section>
+    <div id="top" class="app homePage">
+      <!-- Site navigation stays quiet so the animated wordmark remains the main event. -->
+      <header class="siteHeader">
+        <nav class="siteNav" aria-label="Primary navigation">
+          <a class="wordmark" href="index.html" aria-label="Face-To-Type home">Face-To-Type</a>
+          <div class="navLinks">
+            <a href="index.html" aria-current="page">Home</a>
+            <a href="#project-info">About</a>
+            <a href="render.html">Renderer</a>
+            <a href="#project-process">Process</a>
+          </div>
+        </nav>
+      </header>
 
-      <section class="homeIntro" aria-label="Face-To-Type intro">
-        <p>Black frame. White glyphs. Your face rebuilt one cell at a time.</p>
-        <a class="heroLink" href="render.html">Start camera</a>
-      </section>
-    </main>
+      <main class="homeMain">
+        <!-- The canvas mount is unchanged; src/home.js still owns the animated title. -->
+        <section class="hero" aria-labelledby="heroTitle">
+          <canvas id="heroAscii" class="heroCanvas" aria-label="Animated ASCII wordmark reading Face-To-Type"></canvas>
+          <div class="heroContent">
+            <h1 id="heroTitle" class="srOnly">Face-To-Type</h1>
+            <a class="heroCta" href="render.html">Open Renderer</a>
+          </div>
+        </section>
+      </main>
+
+      <!-- Compact project context without turning the homepage into a marketing page. -->
+      <footer class="siteFooter">
+        <div class="footerInner">
+          <p class="footerTitle">Face-To-Type</p>
+          <p id="project-process" class="footerMeta">Copyright © 2026 Leo Hennessy. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </div>
 
     <script type="module" src="src/home.js"></script>
   </body>

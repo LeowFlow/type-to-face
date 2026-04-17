@@ -1,6 +1,6 @@
 import { listPaletteOptions } from "./palettes.js";
 
-const STORAGE_KEY = "type-to-face-renderer-config-v2";
+const STORAGE_KEY = "type-to-face-renderer-config-v3";
 
 function mergeConfig(defaults, loaded) {
   return {
@@ -37,12 +37,15 @@ export function saveConfig(config) {
 export function setupUI(config, options) {
   const controls = {
     start: byId("start"),
+    imageUpload: byId("imageUpload"),
+    imageZoomOut: byId("imageZoomOut"),
+    imageZoomReset: byId("imageZoomReset"),
+    imageZoomIn: byId("imageZoomIn"),
     pause: byId("pause"),
     snapshot: byId("snapshot"),
     reset: byId("reset"),
     status: byId("status"),
     stats: byId("stats"),
-    renderMode: byId("renderMode"),
     cellSize: byId("cellSize"),
     cellSizeOut: byId("cellSizeOut"),
     gridOut: byId("gridOut"),
@@ -111,7 +114,6 @@ export function setupUI(config, options) {
   };
 
   const syncControls = () => {
-    controls.renderMode.value = config.renderMode;
     controls.cellSize.value = String(config.cellSize);
     controls.lineHeight.value = String(config.lineHeight);
     controls.tracking.value = String(config.tracking);
@@ -157,6 +159,16 @@ export function setupUI(config, options) {
   };
 
   controls.start.addEventListener("click", options.onStart);
+  controls.imageUpload.addEventListener("change", (e) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      options.onImageUpload(file);
+    }
+    e.target.value = "";
+  });
+  controls.imageZoomOut.addEventListener("click", () => options.onImageZoom(1 / 1.2));
+  controls.imageZoomReset.addEventListener("click", options.onImageViewReset);
+  controls.imageZoomIn.addEventListener("click", () => options.onImageZoom(1.2));
   controls.pause.addEventListener("click", options.onPause);
   controls.snapshot.addEventListener("click", options.onSnapshot);
   controls.reset.addEventListener("click", options.onReset);
@@ -165,7 +177,6 @@ export function setupUI(config, options) {
     button.addEventListener("click", () => options.onScalePreset(button.dataset.preset));
   });
 
-  controls.renderMode.addEventListener("change", (e) => update("renderMode", e.target.value));
   controls.cellSize.addEventListener("input", (e) => update("cellSize", toNumber(e.target.value, config.cellSize)));
   controls.lineHeight.addEventListener("input", (e) => update("lineHeight", toNumber(e.target.value, config.lineHeight)));
   controls.tracking.addEventListener("input", (e) => update("tracking", toNumber(e.target.value, config.tracking)));
@@ -205,6 +216,17 @@ export function setupUI(config, options) {
       controls.pause.disabled = !running;
       controls.snapshot.disabled = !running;
       controls.pause.textContent = paused ? "Resume" : "Pause";
+      controls.imageZoomOut.disabled = true;
+      controls.imageZoomReset.disabled = true;
+      controls.imageZoomIn.disabled = true;
+    },
+    setImageState(loaded) {
+      controls.pause.disabled = true;
+      controls.pause.textContent = "Pause";
+      controls.snapshot.disabled = !loaded;
+      controls.imageZoomOut.disabled = !loaded;
+      controls.imageZoomReset.disabled = !loaded;
+      controls.imageZoomIn.disabled = !loaded;
     },
     setGridInfo(columns, rows) {
       controls.gridOut.textContent = `${columns} / ${rows}`;

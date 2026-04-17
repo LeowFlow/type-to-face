@@ -44,18 +44,21 @@ export function configureSamplingBuffer(sampling, width, height, smoothing) {
   sampling.context.imageSmoothingEnabled = Boolean(smoothing);
 }
 
-export function sampleFrame(video, sampling, options) {
+export function sampleSource(source, sampling, options = {}) {
   const { context, canvas } = sampling;
 
   context.save();
   context.setTransform(1, 0, 0, 1, 0, 0);
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (options.mirror) {
+  if (options.view) {
+    const { x, y, width, height } = options.view;
+    context.drawImage(source, x, y, width, height);
+  } else if (options.mirror) {
     context.scale(-1, 1);
-    context.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+    context.drawImage(source, -canvas.width, 0, canvas.width, canvas.height);
   } else {
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    context.drawImage(source, 0, 0, canvas.width, canvas.height);
   }
 
   context.restore();
@@ -68,4 +71,8 @@ export function sampleFrame(video, sampling, options) {
   }
 
   return frame;
+}
+
+export function sampleFrame(video, sampling, options) {
+  return sampleSource(video, sampling, options);
 }

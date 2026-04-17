@@ -20,8 +20,8 @@ python3 -m http.server
    - `canvas.width/height = logicalSize * DPR`
    - `ctx.setTransform(DPR, 0, 0, DPR, 0, 0)`
 3. Output canvas CSS size is set to the same logical size to avoid bitmap stretch.
-4. Crisp mode snaps text positions to integer coordinates and keeps smoothing disabled.
-5. Performance mode lowers DPR to `1` and allows faster rendering.
+4. Rendering snaps text positions to integer coordinates and keeps smoothing disabled.
+5. The renderer always uses this crisp path.
 
 ## Pipeline modules
 - `/Users/leohennessy/type-to-face/src/camera.js`: `getUserMedia` start/stop.
@@ -35,13 +35,12 @@ python3 -m http.server
 ## RendererConfig reference
 | Key | Type | Default | Notes |
 |---|---|---|---|
-| `renderMode` | `"crisp" \| "performance"` | `"crisp"` | Crisp keeps DPR, performance forces DPR 1 |
 | `scalePreset` | `"fine" \| "balanced" \| "chunky"` | `"balanced"` | Quick resolution style preset |
-| `cellSize` | number | `10` | Character cell base size in px |
+| `cellSize` | number | `14` | Character cell base size in px |
 | `fontFamily` | string | IBM Plex Mono stack | Typography family |
 | `fontWeight` | number | `600` | Text weight |
-| `fontSizeMode` | `"auto" \| "manual"` | `"auto"` | Auto derives from cell height |
-| `fontSize` | number | `11` | Manual font size |
+| `fontSizeMode` | `"auto" \| "manual"` | `"manual"` | Manual uses the font size control |
+| `fontSize` | number | `17` | Manual font size |
 | `lineHeight` | number | `1.0` | Tight/standard/loose line spacing |
 | `tracking` | number | `0` | Letter spacing offset |
 | `glyphRampPreset` | string | `"classic"` | Curated density ramps |
@@ -63,9 +62,15 @@ python3 -m http.server
 
 ## Controls in demo
 - Start camera, pause/resume, snapshot PNG
+- Upload a still image instead of using the camera
 - Reset to defaults
-- Fine/Balanced/Chunky preset buttons
 - Full config panel to manipulate `RendererConfig`
 
 ## Persistence
-- Renderer settings are saved to localStorage key `type-to-face-renderer-config-v2`.
+- Renderer settings are saved to localStorage key `type-to-face-renderer-config-v3`.
+
+## Image uploads
+- Uploads are accepted from local image files under 18 MB.
+- Oversized images are downscaled to a maximum 1600px edge and 2 megapixels before sampling.
+- Still images render only when uploaded or when settings change; they do not run through the camera frame loop.
+- Uploaded images render in a fixed stage viewport. Drag the output to pan, use the zoom buttons or mouse wheel to zoom, and snapshots save the current viewport.

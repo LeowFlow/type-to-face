@@ -477,6 +477,57 @@ button:disabled {
   color: var(--muted);
 }
 
+.uploadControl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.uploadControl input {
+  max-width: 230px;
+  color: var(--text);
+  font: inherit;
+}
+
+.uploadControl input::file-selector-button {
+  min-height: 40px;
+  margin-right: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.uploadControl input::file-selector-button:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.imageTools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stage.imageMode .canvasWrap {
+  height: clamp(320px, 56svh, 620px);
+  min-height: 0;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.stage.imageMode .canvasWrap:active {
+  cursor: grabbing;
+}
+
 .layout {
   display: grid;
   gap: 16px;
@@ -749,6 +800,19 @@ button:disabled {
     padding: 10px;
   }
 
+  .uploadControl {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .uploadControl input {
+    max-width: 100%;
+  }
+
+  .imageTools {
+    width: 100%;
+  }
+
   .rendererLayout {
     display: block;
   }
@@ -768,5 +832,9 @@ button:disabled {
   .canvasWrap {
     height: clamp(180px, 36svh, 260px);
     min-height: 0;
+  }
+
+  .stage.imageMode .canvasWrap {
+    height: clamp(180px, 36svh, 260px);
   }
 }

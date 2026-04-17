@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Face-To-Type | Process</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="top" class="app">
+      <header class="siteHeader">
+        <nav class="siteNav" aria-label="Primary navigation">
+          <a class="wordmark" href="index.html" aria-label="Face-To-Type home"
+            >Face-To-Type</a
+          >
+          <div class="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="process.html" aria-current="page">Process</a>
+            <a href="render.html">Renderer</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="contentPage" aria-labelledby="processTitle">
+        <article class="textDocument">
+          <!-- PROCESS COPY: edit the title and opening statement here. -->
+          <header class="pageIntro pageIntroCompact">
+            <p class="kicker">Process</p>
+            <h1 id="processTitle">Process</h1>
+            <p class="lede">
+              The project was developed through research, wiremapping, and
+              iterative prototyping. The process moved from typographic and
+              computational references into a working browser-based system.
+            </p>
+          </header>
+
+          <!-- Research to implementation section: keep this about learning systems. -->
+          <section class="textSection" aria-labelledby="researchTitle">
+            <h2 id="researchTitle">Research to Implementation</h2>
+            <div class="sectionBody">
+              <p>
+                Generative Gestaltung was a key reference for understanding how
+                computational rules can produce visual form. It provided a way
+                to think about parameters, variation, and output as parts of one
+                system.
+              </p>
+              <p>
+                Existing code was used as learning material rather than copied
+                as a finished solution. The focus was on understanding how
+                sampling, mapping, and rendering connect, then rebuilding those
+                ideas around the requirements of Face-To-Type.
+              </p>
+            </div>
+          </section>
+
+          <!-- System architecture section: update stage descriptions if the pipeline changes. -->
+          <section class="textSection" aria-labelledby="architectureTitle">
+            <h2 id="architectureTitle">System Architecture</h2>
+            <div class="sectionBody">
+              <ol class="stageList" aria-label="System stages">
+                <li>
+                  <strong>Input</strong>
+                  <span
+                    >The browser requests webcam access and treats the live
+                    stream as the image source.</span
+                  >
+                </li>
+                <li>
+                  <strong>Image Sampling</strong>
+                  <span
+                    >The video frame is reduced to a grid so each cell can be
+                    measured and translated.</span
+                  >
+                </li>
+                <li>
+                  <strong>Typographic Mapping</strong>
+                  <span
+                    >Brightness values are mapped to glyphs and typographic
+                    behaviour.</span
+                  >
+                </li>
+                <li>
+                  <strong>Rendering Engine</strong>
+                  <span
+                    >The mapped glyphs are drawn to canvas as a live typographic
+                    reconstruction.</span
+                  >
+                </li>
+                <li>
+                  <strong>Configuration System</strong>
+                  <span
+                    >Parameters such as cell size, density, text scale, and
+                    tracking remain adjustable.</span
+                  >
+                </li>
+              </ol>
+            </div>
+          </section>
+
+          <!-- Prototype development section: keep this focused on proof of concept. -->
+          <section class="textSection" aria-labelledby="prototypeTitle">
+            <h2 id="prototypeTitle">Prototype Development</h2>
+            <div class="sectionBody">
+              <p>
+                The first prototype reduced the system to a minimal viable form:
+                webcam input to ASCII output.
+              </p>
+              <p>
+                This proof of concept tested whether a live face could be
+                sampled, mapped, and rendered typographically before broader
+                controls were added.
+              </p>
+            </div>
+          </section>
+
+          <!-- Iteration section: edit these parameters as the renderer changes. -->
+          <section class="textSection" aria-labelledby="iterationTitle">
+            <h2 id="iterationTitle">Iteration and Refinement</h2>
+            <div class="sectionBody">
+              <p>
+                Refinement focused on adjustable parameters including cell size,
+                density, text scale, and spacing.
+              </p>
+              <p>
+                Each adjustment involved a trade-off. Smaller cells increased
+                facial detail but reduced typographic legibility, while larger
+                cells made the letters clearer and pushed the image further into
+                abstraction.
+              </p>
+              <p>
+                The process negotiated abstraction and clarity. The aim was not
+                photographic accuracy, but a reconstruction that remained
+                recognisably facial while foregrounding the type.
+              </p>
+            </div>
+          </section>
+
+          <!-- Technical approach section: update this if the stack changes. -->
+          <section class="textSection" aria-labelledby="technicalTitle">
+            <h2 id="technicalTitle">Technical Approach</h2>
+            <div class="sectionBody">
+              <p>
+                The application is built with HTML, CSS, and JavaScript. It uses
+                webcam input, pixel sampling, algorithmic brightness-to-glyph
+                mapping, and canvas rendering to generate the typographic image
+                in real time.
+              </p>
+            </div>
+          </section>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

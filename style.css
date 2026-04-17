@@ -255,28 +255,175 @@ button:disabled {
 }
 
 .studioStandalone {
-  padding-top: 0;
+  padding-top: 28px;
 }
 
-.pageNav {
-  width: min(1280px, calc(100% - 32px));
+/* Text pages: about/process copy is edited in the matching HTML sections. */
+.contentPage {
+  width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 18px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  border-bottom: 1px solid var(--line);
+  padding: clamp(48px, 8vw, 116px) 0 clamp(72px, 10vw, 140px);
+}
+
+.textDocument {
+  display: grid;
+  gap: clamp(56px, 8vw, 104px);
+}
+
+.pageIntro {
+  max-width: 980px;
+  display: grid;
+  gap: clamp(18px, 3vw, 30px);
+}
+
+.aboutIntro {
+  position: relative;
+  max-width: none;
+  min-height: 560px;
+  padding: 56px;
+  align-content: end;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.aboutIntro::before,
+.aboutIntro::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.aboutIntro::before {
+  z-index: -2;
+  background-image: url("assets/about-ascii-portrait.png");
+  background-position: center;
+  background-size: cover;
+  opacity: 0.84;
+}
+
+.aboutIntro::after {
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.64) 48%,
+      rgba(0, 0, 0, 0.16) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.14) 50%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+}
+
+.aboutIntro .kicker,
+.aboutIntro h1,
+.aboutIntro .lede {
+  position: relative;
+  z-index: 1;
+}
+
+.aboutIntro .lede {
+  max-width: 690px;
+}
+
+.pageIntroCompact {
+  max-width: 840px;
+}
+
+.kicker {
+  margin: 0;
   color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
-.pageNav a {
+.pageIntro h1 {
+  margin: 0;
   color: var(--text);
-  text-decoration: none;
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 0.9;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
 }
 
-.pageNav a:hover {
-  text-decoration: underline;
+.pageIntroCompact h1 {
+  font-size: 7rem;
+}
+
+.lede {
+  max-width: 760px;
+  margin: 0;
+  color: var(--text);
+  font-size: 1.35rem;
+  line-height: 1.5;
+}
+
+.textSection {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.42fr) minmax(0, 760px);
+  gap: clamp(28px, 4vw, 56px);
+  padding-top: clamp(28px, 5vw, 52px);
+  border-top: 1px solid var(--line);
+}
+
+.textSection h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 2.35rem;
+  font-weight: 700;
+  line-height: 1.04;
+  text-transform: uppercase;
+}
+
+.sectionBody {
+  display: grid;
+  gap: 18px;
+}
+
+.sectionBody p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.68;
+}
+
+.stageList {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  list-style: none;
+}
+
+.stageList li {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.stageList li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.stageList strong {
+  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.stageList span {
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.68;
 }
 
 .sectionHeader {
@@ -429,6 +576,28 @@ button:disabled {
     min-height: 430px;
   }
 
+  .pageIntro h1,
+  .pageIntroCompact h1 {
+    font-size: 5.5rem;
+  }
+
+  .aboutIntro {
+    min-height: 520px;
+    padding: 40px;
+  }
+
+  .lede {
+    font-size: 1.22rem;
+  }
+
+  .textSection {
+    grid-template-columns: 1fr;
+  }
+
+  .textSection h2 {
+    font-size: 2rem;
+  }
+
   .layout {
     grid-template-columns: 1fr;
   }
@@ -474,13 +643,72 @@ button:disabled {
     padding: 20px 0 36px;
   }
 
+  .contentPage {
+    width: calc(100% - 24px);
+    padding: 40px 0 72px;
+  }
+
+  .textDocument {
+    gap: 52px;
+  }
+
+  .pageIntro h1,
+  .pageIntroCompact h1 {
+    font-size: 3rem;
+  }
+
+  .aboutIntro {
+    min-height: 520px;
+    padding: 28px 18px;
+  }
+
+  .aboutIntro::before {
+    background-position: 58% center;
+    opacity: 0.68;
+  }
+
+  .aboutIntro::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.94) 0%,
+        rgba(0, 0, 0, 0.74) 58%,
+        rgba(0, 0, 0, 0.22) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.92) 0%,
+        rgba(0, 0, 0, 0.2) 48%,
+        rgba(0, 0, 0, 0.78) 100%
+      );
+  }
+
+  .lede {
+    font-size: 1.05rem;
+  }
+
+  .textSection {
+    gap: 20px;
+    padding-top: 28px;
+  }
+
+  .textSection h2 {
+    font-size: 1.55rem;
+  }
+
+  .sectionBody p,
+  .stageList span {
+    font-size: 0.96rem;
+  }
+
+  .stageList li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
   .sectionHeader {
     display: grid;
     align-items: start;
-  }
-
-  .pageNav {
-    width: calc(100% - 24px);
   }
 
   .footerInner {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Face-To-Type</title>
+    <title>Type-To-Face</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -11,12 +11,14 @@
       <!-- Site navigation stays quiet so the animated wordmark remains the main event. -->
       <header class="siteHeader">
         <nav class="siteNav" aria-label="Primary navigation">
-          <a class="wordmark" href="index.html" aria-label="Face-To-Type home">Face-To-Type</a>
+          <a class="wordmark" href="index.html" aria-label="Face-To-Type home"
+            >Face-To-Type</a
+          >
           <div class="navLinks">
             <a href="index.html" aria-current="page">Home</a>
-            <a href="#project-info">About</a>
+            <a href="about.html">About</a>
+            <a href="process.html">Process</a>
             <a href="render.html">Renderer</a>
-            <a href="#project-process">Process</a>
           </div>
         </nav>
       </header>
@@ -24,7 +26,11 @@
       <main class="homeMain">
         <!-- The canvas mount is unchanged; src/home.js still owns the animated title. -->
         <section class="hero" aria-labelledby="heroTitle">
-          <canvas id="heroAscii" class="heroCanvas" aria-label="Animated ASCII wordmark reading Face-To-Type"></canvas>
+          <canvas
+            id="heroAscii"
+            class="heroCanvas"
+            aria-label="Animated ASCII wordmark reading Face-To-Type"
+          ></canvas>
           <div class="heroContent">
             <h1 id="heroTitle" class="srOnly">Face-To-Type</h1>
             <a class="heroCta" href="render.html">Open Renderer</a>
@@ -36,7 +42,9 @@
       <footer class="siteFooter">
         <div class="footerInner">
           <p class="footerTitle">Face-To-Type</p>
-          <p id="project-process" class="footerMeta">Copyright © 2026 Leo Hennessy. All Rights Reserved.</p>
+          <p id="project-process" class="footerMeta">
+            Copyright © 2026 Leo Hennessy. All Rights Reserved.
+          </p>
         </div>
       </footer>
     </div>

@@ -50,6 +50,8 @@ const SCALE_PRESETS = {
   chunky: { cellSize: 14, multiplier: 1.2 },
 };
 
+const MOBILE_PREVIEW_QUERY = "(max-width: 640px)";
+
 const video = document.getElementById("video");
 const outputCanvas = document.getElementById("output");
 const outputFrame = outputCanvas.parentElement;
@@ -83,11 +85,22 @@ function computeLayout() {
     4,
     Math.round(RendererConfig.cellSize * getScaleMultiplier()),
   );
-  const frameWidth = Math.max(
+  const videoAspect = vh / vw;
+  const isMobilePreview = window.matchMedia?.(MOBILE_PREVIEW_QUERY).matches;
+  let frameWidth = Math.max(
     baseCell,
     Math.floor(outputFrame?.clientWidth || vw),
   );
-  const frameHeight = Math.max(baseCell, Math.round(frameWidth * (vh / vw)));
+  let frameHeight = Math.max(baseCell, Math.round(frameWidth * videoAspect));
+
+  if (isMobilePreview) {
+    const maxFrameHeight = Math.floor(outputFrame?.clientHeight || frameHeight);
+    if (maxFrameHeight > baseCell && frameHeight > maxFrameHeight) {
+      frameHeight = Math.max(baseCell, maxFrameHeight);
+      frameWidth = Math.max(baseCell, Math.round(frameHeight / videoAspect));
+    }
+  }
+
   const baseCols = Math.max(1, Math.floor(frameWidth / baseCell));
   const baseRows = Math.max(1, Math.floor(frameHeight / baseCell));
 

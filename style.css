@@ -749,7 +749,24 @@ button:disabled {
     padding: 10px;
   }
 
+  .rendererLayout {
+    display: block;
+  }
+
+  .stage {
+    position: sticky;
+    top: 0;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 4;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.62);
+  }
+
+  .configPanel {
+    margin-top: 16px;
+  }
+
   .canvasWrap {
-    min-height: 240px;
+    height: clamp(180px, 36svh, 260px);
+    min-height: 0;
   }
 }

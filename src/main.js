@@ -1,5 +1,9 @@
 import { startCamera, stopCamera } from "./camera.js";
-import { createSamplingContext, configureSamplingBuffer, sampleFrame } from "./sampling.js";
+import {
+  createSamplingContext,
+  configureSamplingBuffer,
+  sampleFrame,
+} from "./sampling.js";
 import { getGlyphRamp, mapPixelToCell } from "./mapping.js";
 import { RenderCanvas } from "./renderCanvas.js";
 import { applyPalette } from "./palettes.js";
@@ -48,6 +52,7 @@ const SCALE_PRESETS = {
 
 const video = document.getElementById("video");
 const outputCanvas = document.getElementById("output");
+const outputFrame = outputCanvas.parentElement;
 
 const RendererConfig = loadConfig(DEFAULT_CONFIG);
 const sampling = createSamplingContext();
@@ -74,21 +79,26 @@ function computeLayout() {
     return null;
   }
 
-  const baseCell = Math.max(4, Math.round(RendererConfig.cellSize * getScaleMultiplier()));
-  const baseCols = Math.max(1, Math.floor(vw / baseCell));
-  const baseRows = Math.max(1, Math.floor(vh / baseCell));
+  const baseCell = Math.max(
+    4,
+    Math.round(RendererConfig.cellSize * getScaleMultiplier()),
+  );
+  const frameWidth = Math.max(
+    baseCell,
+    Math.floor(outputFrame?.clientWidth || vw),
+  );
+  const frameHeight = Math.max(baseCell, Math.round(frameWidth * (vh / vw)));
+  const baseCols = Math.max(1, Math.floor(frameWidth / baseCell));
+  const baseRows = Math.max(1, Math.floor(frameHeight / baseCell));
 
   const sampleCols = Math.max(1, Math.floor(baseCols * state.adaptiveScale));
   const sampleRows = Math.max(1, Math.floor(baseRows * state.adaptiveScale));
 
-  const logicalWidth = baseCols * baseCell;
-  const logicalHeight = baseRows * baseCell;
-
   return {
     columns: sampleCols,
     rows: sampleRows,
-    cellWidth: logicalWidth / sampleCols,
-    cellHeight: (logicalHeight / sampleRows) * RendererConfig.lineHeight,
+    cellWidth: frameWidth / sampleCols,
+    cellHeight: (frameHeight / sampleRows) * RendererConfig.lineHeight,
     baseCols,
     baseRows,
   };
@@ -104,7 +114,9 @@ function mappingConfig() {
     invert: RendererConfig.invert,
     customRamp: RendererConfig.customRamp,
     glyphRampPreset: RendererConfig.glyphRampPreset,
-    glyphRamps: Object.fromEntries(Object.entries(GLYPH_RAMPS).map(([k, v]) => [k, v.chars])),
+    glyphRamps: Object.fromEntries(
+      Object.entries(GLYPH_RAMPS).map(([k, v]) => [k, v.chars]),
+    ),
   };
 }
 
@@ -113,7 +125,10 @@ function getStyle(layout) {
   return {
     fontFamily: RendererConfig.fontFamily,
     fontWeight: RendererConfig.fontWeight,
-    fontSize: RendererConfig.fontSizeMode === "manual" ? RendererConfig.fontSize : derivedFontSize,
+    fontSize:
+      RendererConfig.fontSizeMode === "manual"
+        ? RendererConfig.fontSize
+        : derivedFontSize,
     letterSpacing: RendererConfig.tracking,
   };
 }
@@ -130,7 +145,7 @@ function applyColourMode(mapped) {
       mapped.g,
       mapped.b,
       RendererConfig.palettePreset,
-      RendererConfig.paletteStrength
+      RendererConfig.paletteStrength,
     );
     return { ...mapped, r, g, b };
   }
@@ -153,11 +168,14 @@ function adaptResolution(frameMs) {
 }
 
 function updateStats(layout, frameMs) {
-  const dpr = RendererConfig.renderMode === "performance" ? 1 : window.devicePixelRatio || 1;
+  const dpr =
+    RendererConfig.renderMode === "performance"
+      ? 1
+      : window.devicePixelRatio || 1;
   const fps = frameMs > 0 ? Math.round(1000 / frameMs) : 0;
   ui.setGridInfo(layout.baseCols, layout.baseRows);
   ui.setStats(
-    `DPR ${dpr.toFixed(2)} | ${layout.columns}x${layout.rows} samples | base ${layout.baseCols}x${layout.baseRows} | ${fps} fps | adaptive ${state.adaptiveScale.toFixed(2)}`
+    `DPR ${dpr.toFixed(2)} | ${layout.columns}x${layout.rows} samples | base ${layout.baseCols}x${layout.baseRows} | ${fps} fps | adaptive ${state.adaptiveScale.toFixed(2)}`,
   );
 }
 
@@ -191,7 +209,7 @@ function draw(now) {
     sampling,
     layout.columns,
     layout.rows,
-    RendererConfig.smoothing && RendererConfig.renderMode !== "crisp"
+    RendererConfig.smoothing && RendererConfig.renderMode !== "crisp",
   );
 
   const frame = sampleFrame(video, sampling, {
@@ -208,7 +226,7 @@ function draw(now) {
     layout,
     getStyle(layout),
     (r, g, b) => applyColourMode(mapPixelToCell(r, g, b, mapConfig, glyphRamp)),
-    RendererConfig.renderMode === "crisp"
+    RendererConfig.renderMode === "crisp",
   );
 
   const frameMs = performance.now() - frameStart;

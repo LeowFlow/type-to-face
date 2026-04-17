@@ -394,6 +394,16 @@ button:disabled {
   line-height: 1.68;
 }
 
+.sectionBody a {
+  color: var(--text);
+  text-decoration-color: var(--muted);
+  text-underline-offset: 4px;
+}
+
+.sectionBody a:hover {
+  text-decoration-color: var(--text);
+}
+
 .stageList {
   margin: 0;
   padding: 0;

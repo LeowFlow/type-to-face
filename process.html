@@ -17,6 +17,7 @@
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="process.html" aria-current="page">Process</a>
+            <a href="examples.html">Examples</a>
             <a href="render.html">Renderer</a>
           </div>
         </nav>
@@ -24,8 +25,8 @@
 
       <main class="contentPage" aria-labelledby="processTitle">
         <article class="textDocument">
-          <!-- PROCESS COPY: edit the title and opening statement here. -->
-          <header class="pageIntro pageIntroCompact">
+          <!-- PROCESS HERO: edit the text here; the background image is set in style.css. -->
+          <header class="pageIntro processIntro">
             <p class="kicker">Process</p>
             <h1 id="processTitle">Process</h1>
             <p class="lede">
@@ -46,15 +47,15 @@
                   rel="noreferrer"
                   >Generative Gestaltung</a
                 >
-                was a key reference for understanding how computational rules
-                can produce visual form. It provided a way to think about
+                was a key reference for understanding how computational processing
+                can translate imagery into typographic visuals. It provided a way to think about
                 parameters, variation, and output as parts of one system.
               </p>
               <p>
-                Existing code was used as learning material rather than copied
-                as a finished solution. The focus was on understanding how
+                Code snippets were used as learning material, rather than intergrated
+                directly into the project. The focus was on understanding how their
                 sampling, mapping, and rendering connect, then rebuilding those
-                ideas around the requirements of Face-To-Type.
+                fundamentals around the requirements of Type-To-Face.
               </p>
             </div>
           </section>
@@ -67,28 +68,28 @@
                 <li>
                   <strong>Input</strong>
                   <span
-                    >The browser requests webcam access and treats the live
-                    stream as the image source.</span
+                    >The browser requests webcam access or prompts image upload, and uses the
+                    input as the image source.</span
                   >
                 </li>
                 <li>
                   <strong>Image Sampling</strong>
                   <span
-                    >The video frame is reduced to a grid so each cell can be
+                    >The video/image frame is converted to a grid so each cell can be
                     measured and translated.</span
                   >
                 </li>
                 <li>
                   <strong>Typographic Mapping</strong>
                   <span
-                    >Brightness values are mapped to glyphs and typographic
+                    >Brightness & tonal values are mapped to glyphs and typographic
                     behaviour.</span
                   >
                 </li>
                 <li>
                   <strong>Rendering Engine</strong>
                   <span
-                    >The mapped glyphs are drawn to canvas as a live typographic
+                    >The mapped glyphs are drawn to the grid as a live typographic
                     reconstruction.</span
                   >
                 </li>
@@ -108,13 +109,13 @@
             <h2 id="prototypeTitle">Prototype Development</h2>
             <div class="sectionBody">
               <p>
-                The first prototype reduced the system to a minimal viable form:
-                webcam input to ASCII output.
+                The first prototype focused on the systems ability to produce a visually recognisable outcome:
+                image input to typographic output.
               </p>
               <p>
-                This proof of concept tested whether a live face could be
-                sampled, mapped, and rendered typographically before broader
-                controls were added.
+                This proof of concept tested whether a live camera feed could be
+                sampled, mapped, and rendered typographically with good performance before broader
+                parameters were added.
               </p>
             </div>
           </section>
@@ -145,7 +146,7 @@
 
       <footer class="siteFooter">
         <div class="footerInner">
-          <p class="footerTitle">Face-To-Type</p>
+          <p class="footerTitle">Type-To-Face</p>
           <p class="footerMeta">
             Copyright © 2026 Leo Hennessy. All Rights Reserved.
           </p>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Type-To-Face | Examples</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="siteHeader">
+        <nav class="siteNav" aria-label="Primary navigation">
+          <a class="wordmark" href="index.html" aria-label="Type-To-Face home"
+            >Type-To-Face</a
+          >
+          <div class="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="process.html">Process</a>
+            <a href="examples.html" aria-current="page">Examples</a>
+            <a href="render.html">Renderer</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="contentPage" aria-labelledby="examplesTitle">
+        <article class="textDocument">
+          <header class="pageIntro examplesIntro">
+            <p class="kicker">Examples</p>
+            <h1 id="examplesTitle">Examples</h1>
+            <p class="lede">
+            A showcase of images generated through Type-To-Face. Each output reflects how input from any webcam or image can be translated into unique typographic compositions. </p>
+          </header>
+
+          <section class="gallerySection">
+            <div class="examplesGrid">
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-1.png"
+                    alt="Black and white typographic portrait built from crosses, circles, and hash marks."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-2.png"
+                    alt="Blue typographic portrait with white glyph highlights and a green lower field."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-3.png"
+                    alt="Warm-toned typographic portrait in cream, brown, and pink glyphs."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-4.png"
+                    alt="Green typographic portrait formed from repeated e, o, and w glyphs."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-5.png"
+                    alt="Typographic portrait export built from layered glyphs in a widescreen composition."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-6.png"
+                    alt="Typographic portrait export with a dense ASCII-like glyph field."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-7.png"
+                    alt="Blue typographic portrait export with bright white glyph clusters and a yellow-green base."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-8.png"
+                    alt="High-contrast typographic portrait export with white glyphs and scattered colour accents."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-9.png"
+                    alt="Dark typographic scene with warm amber lighting and a bright square light source."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-10.png"
+                    alt="Blue typographic outdoor scene showing a figure against sky, landscape, and water."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-11.png"
+                    alt="Typographic interior scene with a figure, a glowing monitor, and a cup in the foreground."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+
+              <figure class="galleryCard">
+                <div class="galleryMedia">
+                  <img
+                    src="assets/type-to-face-12.png"
+                    alt="Warm-toned typographic portrait showing a figure indoors beside a bright red form."
+                    loading="lazy"
+                  />
+                </div>
+              </figure>
+            </div>
+          </section>
+        </article>
+      </main>
+
+      <dialog
+        id="galleryModal"
+        class="galleryModal"
+        aria-label="Image preview"
+      >
+        <div class="galleryModalInner">
+          <div class="galleryModalHeader">
+            <div class="galleryModalActions">
+              <a
+                id="galleryModalDownload"
+                class="galleryModalDownload"
+                href="#"
+                download
+                aria-label="Download PNG"
+                title="Download PNG"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3v12" />
+                  <path d="m7 10 5 5 5-5" />
+                  <path d="M5 21h14" />
+                </svg>
+              </a>
+              <button
+                id="galleryModalClose"
+                class="galleryModalClose"
+                type="button"
+                aria-label="Close preview"
+                title="Close preview"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M6 6 18 18" />
+                  <path d="M6 18 18 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="galleryModalStage">
+            <img id="galleryModalImage" class="galleryModalImage" alt="" />
+          </div>
+        </div>
+      </dialog>
+
+      <footer class="siteFooter">
+        <div class="footerInner">
+          <p class="footerTitle">Type-To-Face</p>
+          <p class="footerMeta">
+            Copyright © 2026 Leo Hennessy. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="src/examples.js"></script>
+  </body>
+</html>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=JetBrains+Mono&family=Fira+Code&family=Source+Code+Pro&family=Inconsolata&family=Space+Mono&family=Ubuntu+Mono&family=Cascadia+Mono&family=Roboto+Mono&display=swap");
+
 :root {
   --bg: #000000;
   --surface: #050505;
@@ -604,7 +606,7 @@ button:disabled {
   aspect-ratio: 1 / 1;
   padding: 0;
   border: 1px solid var(--line-strong);
-  border-radius: 50%;
+  border-radius: 8px;
   background: var(--bg);
   color: var(--text);
   font: inherit;

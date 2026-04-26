@@ -1,4 +1,5 @@
 import { listPaletteOptions } from "./palettes.js";
+import { FONT_FAMILY_OPTIONS } from "./fontOptions.js";
 
 const STORAGE_KEY = "type-to-face-renderer-config-v3";
 
@@ -16,6 +17,22 @@ function byId(id) {
 function toNumber(value, fallback) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function appendOption(select, value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  select.appendChild(option);
+}
+
+function getSavedFontLabel(fontFamily) {
+  const primaryFamily = fontFamily
+    .split(",")[0]
+    ?.trim()
+    .replace(/^['"]|['"]$/g, "");
+
+  return primaryFamily ? `${primaryFamily} (saved)` : "Saved font stack";
 }
 
 export function loadConfig(defaultConfig) {
@@ -85,17 +102,19 @@ export function setupUI(config, options) {
   };
 
   for (const [key, label] of Object.entries(options.glyphRamps)) {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = label.label;
-    controls.glyphRampPreset.appendChild(opt);
+    appendOption(controls.glyphRampPreset, key, label.label);
   }
 
   for (const entry of listPaletteOptions()) {
-    const opt = document.createElement("option");
-    opt.value = entry.key;
-    opt.textContent = entry.label;
-    controls.palettePreset.appendChild(opt);
+    appendOption(controls.palettePreset, entry.key, entry.label);
+  }
+
+  for (const entry of FONT_FAMILY_OPTIONS) {
+    appendOption(controls.fontFamily, entry.value, entry.label);
+  }
+
+  if (![...controls.fontFamily.options].some((option) => option.value === config.fontFamily)) {
+    appendOption(controls.fontFamily, config.fontFamily, getSavedFontLabel(config.fontFamily));
   }
 
   const updateOutputs = () => {
@@ -155,7 +174,7 @@ export function setupUI(config, options) {
       controls.paletteStrength.disabled = config.colourMode !== "palette";
     }
     updateOutputs();
-    options.onConfigChange();
+    options.onConfigChange(key);
   };
 
   controls.start.addEventListener("click", options.onStart);
@@ -180,7 +199,7 @@ export function setupUI(config, options) {
   controls.cellSize.addEventListener("input", (e) => update("cellSize", toNumber(e.target.value, config.cellSize)));
   controls.lineHeight.addEventListener("input", (e) => update("lineHeight", toNumber(e.target.value, config.lineHeight)));
   controls.tracking.addEventListener("input", (e) => update("tracking", toNumber(e.target.value, config.tracking)));
-  controls.fontFamily.addEventListener("input", (e) => update("fontFamily", e.target.value));
+  controls.fontFamily.addEventListener("change", (e) => update("fontFamily", e.target.value));
   controls.fontWeight.addEventListener("input", (e) => update("fontWeight", toNumber(e.target.value, config.fontWeight)));
   controls.fontSizeMode.addEventListener("change", (e) => update("fontSizeMode", e.target.value));
   controls.fontSize.addEventListener("input", (e) => update("fontSize", toNumber(e.target.value, config.fontSize)));

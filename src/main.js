@@ -7,7 +7,6 @@ import {
 import { getGlyphRamp, mapPixelToCell } from "./mapping.js";
 import { RenderCanvas } from "./renderCanvas.js";
 import { applyPalette } from "./palettes.js";
-import { DEFAULT_FONT_FAMILY, getFontLoadFamily } from "./fontOptions.js";
 import { loadConfig, saveConfig, setupUI } from "./ui.js";
 
 const GLYPH_RAMPS = {
@@ -26,7 +25,7 @@ const IMAGE_ZOOM_MAX = 6;
 const DEFAULT_CONFIG = {
   scalePreset: "balanced",
   cellSize: 14,
-  fontFamily: DEFAULT_FONT_FAMILY,
+  fontFamily: '"IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace',
   fontWeight: 600,
   fontSizeMode: "manual",
   fontSize: 17,
@@ -94,7 +93,6 @@ const state = {
     lastPointerY: 0,
   },
   hasOutput: false,
-  fontLoadRequest: 0,
 };
 
 function getScaleMultiplier() {
@@ -534,37 +532,6 @@ function renderImageSource() {
   return null;
 }
 
-function refreshCurrentOutput() {
-  if (state.sourceType === "image") {
-    return renderImageSource();
-  }
-
-  if (state.sourceType === "camera" && state.running && state.paused) {
-    return renderCurrentSource({ adaptive: false });
-  }
-
-  return null;
-}
-
-async function ensureRendererFontLoaded({ refresh = true } = {}) {
-  if (!document.fonts?.load) {
-    return;
-  }
-
-  const requestId = ++state.fontLoadRequest;
-  const fontSpec = `${RendererConfig.fontWeight} 16px ${getFontLoadFamily(RendererConfig.fontFamily)}`;
-
-  try {
-    await document.fonts.load(fontSpec, "MW@#0");
-  } catch {
-    return;
-  }
-
-  if (refresh && requestId === state.fontLoadRequest) {
-    refreshCurrentOutput();
-  }
-}
-
 function zoomImageView(factor) {
   const layout = computeLayout();
   if (!layout || state.sourceType !== "image") {
@@ -697,9 +664,7 @@ async function onImageUpload(file) {
     state.hasOutput = false;
     resetImageView();
 
-    await ensureRendererFontLoaded({ refresh: false });
-
-    const result = refreshCurrentOutput();
+    const result = renderImageSource();
     if (!result) {
       ui.setStatus("Image loaded, but it could not be rendered.");
       return;
@@ -748,8 +713,7 @@ function onReset() {
   state.adaptiveScale = 1;
   ui.syncControls();
   saveConfig(RendererConfig);
-  refreshCurrentOutput();
-  void ensureRendererFontLoaded();
+  renderImageSource();
   ui.setStatus("RendererConfig reset to defaults.");
 }
 
@@ -763,17 +727,13 @@ function onScalePreset(preset) {
   RendererConfig.cellSize = entry.cellSize;
   saveConfig(RendererConfig);
   ui.syncControls();
-  refreshCurrentOutput();
+  renderImageSource();
 }
 
-function onConfigChange(key) {
+function onConfigChange() {
   normalizeConfig(RendererConfig);
   saveConfig(RendererConfig);
-  refreshCurrentOutput();
-
-  if (key === "fontFamily" || key === "fontWeight") {
-    void ensureRendererFontLoaded();
-  }
+  renderImageSource();
 }
 
 const ui = setupUI(RendererConfig, {
@@ -791,7 +751,6 @@ const ui = setupUI(RendererConfig, {
 
 ui.setRunningState(false, false);
 ui.setStatus("Camera idle.");
-void ensureRendererFontLoaded({ refresh: false });
 
 outputFrame.addEventListener("pointerdown", onImagePointerDown);
 outputFrame.addEventListener("pointermove", onImagePointerMove);
@@ -799,7 +758,7 @@ outputFrame.addEventListener("pointerup", onImagePointerEnd);
 outputFrame.addEventListener("pointercancel", onImagePointerEnd);
 outputFrame.addEventListener("wheel", onImageWheel, { passive: false });
 window.addEventListener("resize", () => {
-  refreshCurrentOutput();
+  renderImageSource();
 });
 
 window.RendererConfig = RendererConfig;
@@ -814,10 +773,7 @@ window.RendererConfigAPI = {
     normalizeConfig(RendererConfig);
     ui.syncControls();
     saveConfig(RendererConfig);
-    refreshCurrentOutput();
-    if ("fontFamily" in nextConfig || "fontWeight" in nextConfig) {
-      void ensureRendererFontLoaded();
-    }
+    renderImageSource();
   },
   reset() {
     onReset();

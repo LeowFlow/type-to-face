@@ -37,7 +37,7 @@ python3 -m http.server
 |---|---|---|---|
 | `scalePreset` | `"fine" \| "balanced" \| "chunky"` | `"balanced"` | Quick resolution style preset |
 | `cellSize` | number | `14` | Character cell base size in px |
-| `fontFamily` | string | IBM Plex Mono stack | Typography family from the curated dropdown |
+| `fontFamily` | string | IBM Plex Mono stack | Typography family |
 | `fontWeight` | number | `600` | Text weight |
 | `fontSizeMode` | `"auto" \| "manual"` | `"manual"` | Manual uses the font size control |
 | `fontSize` | number | `17` | Manual font size |

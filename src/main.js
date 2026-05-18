@@ -25,7 +25,7 @@ const IMAGE_ZOOM_MAX = 6;
 const DEFAULT_CONFIG = {
   scalePreset: "balanced",
   cellSize: 14,
-  fontFamily: '"IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace',
+  fontFamily: '"Roboto Mono Local", "SFMono-Regular", Menlo, Consolas, monospace',
   fontWeight: 600,
   fontSizeMode: "manual",
   fontSize: 17,

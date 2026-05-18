@@ -1,6 +1,6 @@
 const HERO_TEXT = "Face-To-Type";
 const THREE_MODULE_URL = "https://unpkg.com/three@0.160.0/build/three.module.js";
-const FONT_STACK = '"IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace';
+const FONT_STACK = '"Roboto Mono Local", "SFMono-Regular", Menlo, Consolas, monospace';
 const GLYPHS = ["F", "A", "C", "E", "-", "T", "O", "Y", "P", "@", "#", "%", "&", "M", "W", "N", "X", "K", "0", "1", "+", "=", "/", "\\", "|", ":", "."];
 const UNIT = 0.78;
 const POINT_STEP = 3;
@@ -63,7 +63,18 @@ function chooseGlyph(x, y, seed, parentCharacter) {
 }
 
 function getTextFont(size) {
-  return `900 ${size}px ${FONT_STACK}`;
+  return `700 ${size}px ${FONT_STACK}`;
+}
+
+function ensureHeroFontLoaded() {
+  if (!document.fonts) {
+    return Promise.resolve();
+  }
+
+  return Promise.all([
+    document.fonts.load(`700 72px ${FONT_STACK}`),
+    document.fonts.ready,
+  ]).then(() => undefined, () => undefined);
 }
 
 function clamp(value, min, max) {
@@ -1146,7 +1157,7 @@ function startCanvasFallback(canvas) {
       const glyphSize = Math.max(minimumSize, 9.5 * state.scale * fit * perspective);
 
       ctx.globalAlpha = state.alpha;
-      ctx.font = `900 ${glyphSize}px ${FONT_STACK}`;
+      ctx.font = `700 ${glyphSize}px ${FONT_STACK}`;
       ctx.save();
       ctx.translate(width / 2 + rotated.x * perspective, height / 2 - rotated.y * perspective);
       ctx.rotate(state.rotationZ);
@@ -1175,14 +1186,18 @@ export function initAsciiHero(canvas) {
   let disposed = false;
   let cleanup = () => {};
 
+  const fontLoad = ensureHeroFontLoaded();
+
   import(THREE_MODULE_URL)
-    .then((THREE) => {
+    .then(async (THREE) => {
+      await fontLoad;
       if (disposed) {
         return;
       }
       cleanup = startThreeHero(canvas, THREE);
     })
-    .catch(() => {
+    .catch(async () => {
+      await fontLoad;
       if (disposed) {
         return;
       }
